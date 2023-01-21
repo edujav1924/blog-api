@@ -1,10 +1,9 @@
 import { Router } from "express";
+import userControllers from "../controllers/userControllers.js";
 const router = Router();
 // version of user API v1
 // define routes for users
 
-router.get("/", (req, res) => {
-  res.json("get all users");
-});
+router.get("/", userControllers.getAllUsers);
 
 export default router;
