@@ -75,4 +75,7 @@ const getUserPostList = async (filterParams) => {
     count: userPostsList.length,
   };
 };
+
+const createUserPost = async (params) => {};
+
 export default { getUsersFromCloud, getUserByIDFromCloud, getUserPostList };
