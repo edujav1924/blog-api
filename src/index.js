@@ -1,8 +1,11 @@
 import express from "express";
-import v1Routes from "./v1/routes/userRoutes.js";
 import fetch from "node-fetch";
-global.fetch = fetch;
+import { config } from "dotenv";
 
+import v1Routes from "./v1/routes/userRoutes.js";
+config();
+
+global.fetch = fetch;
 const app = express();
 
 app.use(express.json());
