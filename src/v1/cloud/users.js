@@ -1,5 +1,7 @@
-import fetch from "node-fetch";
-import { CLOUD_USERS_API_URL } from "../../utils/constants/userConstants.js";
+import {
+  CLOUD_USERS_API_URL,
+  CLOUD_USERS_POSTS_API_URL,
+} from "../../utils/constants/userConstants.js";
 
 const getUsersFromCloud = async (filterParams) => {
   let users = {};
@@ -48,4 +50,29 @@ const getUserByIDFromCloud = async (userId) => {
 
   return user;
 };
-export { getUsersFromCloud, getUserByIDFromCloud };
+
+const getUserPostList = async (filterParams) => {
+  let posts = {};
+  try {
+    const request = await fetch(CLOUD_USERS_POSTS_API_URL);
+    if (!request.ok) {
+      throw { status: 500, message: "Unexpected request status from database" };
+    }
+    posts = await request.json();
+  } catch (error) {
+    throw { status: 500, message: error.message || "An error occurred" };
+  }
+  let userPostsList = posts.filter((post) => {
+    return post.userId === filterParams.userId;
+  });
+
+  userPostsList = userPostsList.slice(
+    filterParams.startPaginationIndex,
+    filterParams.endPaginationIndex
+  );
+  return {
+    posts: userPostsList,
+    count: userPostsList.length,
+  };
+};
+export default { getUsersFromCloud, getUserByIDFromCloud, getUserPostList };
