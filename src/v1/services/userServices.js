@@ -1,5 +1,5 @@
 import { getPaginationLimits } from "../../utils/pagination.js";
-import { getUsersFromCloud } from "../cloud/users.js";
+import { getUsersFromCloud, getUserByIDFromCloud } from "../cloud/users.js";
 
 const getUserList = async (req) => {
   const limit = 5;
@@ -16,10 +16,20 @@ const getUserList = async (req) => {
     usersList.hasNextPage = hasNextPage;
     usersList.currentPage = page;
   } catch (error) {
-    throw { status: 500, message: error.message };
+    throw { status: error.status || 500, message: error.message };
   }
 
   return usersList;
 };
 
-export default { getUserList };
+const getUser = async (req) => {
+  let user = {};
+  const { userId } = req.params;
+  try {
+    user = await getUserByIDFromCloud(parseInt(userId));
+  } catch (error) {
+    throw { status: error.status || 500, message: error.message };
+  }
+  return user;
+};
+export default { getUserList, getUser };

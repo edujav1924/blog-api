@@ -8,4 +8,14 @@ const getUserList = async (req, res) => {
   }
   return res.json(users);
 };
-export default { getUserList };
+
+const getUser = async (req, res) => {
+  let user = {};
+  try {
+    user = await userService.getUser(req);
+  } catch (error) {
+    return res.status(error.status).json({ error: error.message });
+  }
+  return res.json({ user: user });
+};
+export default { getUserList, getUser };
