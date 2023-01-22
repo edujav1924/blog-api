@@ -28,4 +28,14 @@ const getUserPostList = async (req, res) => {
   }
   return res.json(postList);
 };
-export default { getUserList, getUser, getUserPostList };
+
+const createNewUserPost = async (req, res) => {
+  let newPost = {};
+  try {
+    newPost = await userService.createNewUserPost(req);
+  } catch (error) {
+    return res.status(error.status || 500).json({ error: error.message });
+  }
+  return res.status(201).json(newPost);
+};
+export default { getUserList, getUser, getUserPostList, createNewUserPost };

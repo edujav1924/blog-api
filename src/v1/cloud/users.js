@@ -76,6 +76,33 @@ const getUserPostList = async (filterParams) => {
   };
 };
 
-const createUserPost = async (params) => {};
+const createUserPost = async (postData) => {
+  let newPost = {};
+  try {
+    const request = await fetch(CLOUD_USERS_POSTS_API_URL, {
+      method: "POST",
+      body: JSON.stringify(postData),
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+      },
+    });
 
-export default { getUsersFromCloud, getUserByIDFromCloud, getUserPostList };
+    if (request.status !== 201) {
+      throw { status: request.status, message: "An Error occurred" };
+    }
+    newPost = await request.json();
+  } catch (error) {
+    throw {
+      status: error.status || 500,
+      message: error.message || "An Error occurred",
+    };
+  }
+  return newPost;
+};
+
+export default {
+  getUsersFromCloud,
+  getUserByIDFromCloud,
+  getUserPostList,
+  createUserPost,
+};

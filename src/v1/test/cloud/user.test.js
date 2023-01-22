@@ -73,3 +73,50 @@ it("verify_post_list", async () => {
   });
   expect(data.posts.length).toBe(1);
 });
+
+it("check__success_post_userPost", async () => {
+  const postObject = {
+    userId: 1,
+    title: "title",
+    body: "body",
+    id: 15,
+  };
+  fetch.mockImplementationOnce(() =>
+    Promise.resolve({
+      status: 201,
+      json: () => Promise.resolve(postObject),
+    })
+  );
+  let newPost = await cloudUser.createUserPost({
+    userId: 1,
+    title: "title",
+    body: "body",
+  });
+  expect(typeof newPost).toBe("object");
+  expect(newPost).toMatchObject(postObject);
+});
+
+it("check_failed_post_userPost", async () => {
+  fetch.mockImplementationOnce(() =>
+    Promise.resolve({
+      status: 400,
+      json: () =>
+        Promise.resolve({
+          userId: 1,
+          id: 15,
+          title: "title",
+          body: "body",
+        }),
+    })
+  );
+  try {
+    let newPost = await cloudUser.createUserPost({
+      userId: 1,
+      title: "title",
+      body: "body",
+    });
+  } catch (error) {
+    expect(typeof error.status).toBe("number");
+    expect(typeof error.message).toBe("string");
+  }
+});

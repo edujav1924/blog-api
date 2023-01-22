@@ -7,6 +7,7 @@ const router = Router();
 router
   .get("/", userControllers.getUserList)
   .get("/:userId", userControllers.getUser)
-  .get("/:userId/posts", userControllers.getUserPostList);
+  .get("/:userId/posts", userControllers.getUserPostList)
+  .post("/:userId/posts", userControllers.createNewUserPost);
 
 export default router;

@@ -56,4 +56,24 @@ const getUserPostList = async (req) => {
 
   return userPostsList;
 };
-export default { getUserList, getUserPostList, getUser };
+
+const createNewUserPost = async (req) => {
+  const { userId, body, title } = req.body;
+  const postData = {
+    userId: userId,
+    body: body,
+    title: title,
+  };
+  let newPost = {};
+  try {
+    newPost = await cloudUser.createUserPost(postData);
+  } catch (error) {
+    throw {
+      status: error.status || 500,
+      message: error.message || "An error ocurred",
+    };
+  }
+  return newPost;
+};
+
+export default { getUserList, getUserPostList, getUser, createNewUserPost };
