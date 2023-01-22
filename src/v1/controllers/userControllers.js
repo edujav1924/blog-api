@@ -1,11 +1,11 @@
 import userService from "../services/userServices.js";
-const getAllUsers = async (req, res) => {
+const getUserList = async (req, res) => {
   let users = {};
   try {
-    users = await userService.getAllUsers(req);
+    users = await userService.getUserList(req);
   } catch (error) {
     return res.status(error.status).json({ error: error.message });
   }
-  return res.json({ users: users });
+  return res.json(users);
 };
-export default { getAllUsers };
+export default { getUserList };

@@ -4,6 +4,6 @@ const router = Router();
 // version of user API v1
 // define routes for users
 
-router.get("/", userControllers.getAllUsers);
+router.get("/", userControllers.getUserList);
 
 export default router;

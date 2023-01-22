@@ -14,7 +14,13 @@ const getUsersFromCloud = async (filterParams) => {
     throw { status: 500, message: error.message };
   }
 
-  return users.slice(filterParams.startIndex, filterParams.endIndex); // apply pagination limits
+  return {
+    users: users.slice(
+      filterParams.startPaginationIndex,
+      filterParams.endPaginationIndex
+    ), // apply pagination limits
+    count: users.length,
+  };
 };
 
 export { getUsersFromCloud };
