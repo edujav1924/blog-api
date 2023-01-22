@@ -4,7 +4,7 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 // set routes for API
-app.use("/api/v1", v1Routes);
+app.use("/api/v1/users", v1Routes);
 
 // launch server
 app.listen(PORT, () => {
