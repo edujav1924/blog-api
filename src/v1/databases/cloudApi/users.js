@@ -1,7 +1,7 @@
 import {
   CLOUD_USERS_API_URL,
   CLOUD_USERS_POSTS_API_URL,
-} from "../../utils/constants/userConstants.js";
+} from "../../../utils/constants/userConstants.js";
 
 // get users from cloud API
 const getUsers = async (filterParams) => {

@@ -1,5 +1,5 @@
 import { getPaginationLimits } from "../../utils/pagination.js";
-import cloudUser from "../cloud/users.js";
+import cloudUser from "../databases/cloudApi/users.js";
 
 // get user list
 const getUserList = async (req) => {
