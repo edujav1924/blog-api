@@ -3,7 +3,8 @@ import {
   CLOUD_USERS_POSTS_API_URL,
 } from "../../utils/constants/userConstants.js";
 
-const getUsersFromCloud = async (filterParams) => {
+// get users from cloud API
+const getUsers = async (filterParams) => {
   let users = {};
   try {
     const request = await fetch(CLOUD_USERS_API_URL);
@@ -15,17 +16,21 @@ const getUsersFromCloud = async (filterParams) => {
   } catch (error) {
     throw { status: 500, message: error.message };
   }
+  const totalUsers = users.length;
 
+  //apply pagination
+  users = users.slice(
+    filterParams.startPaginationIndex,
+    filterParams.endPaginationIndex
+  );
   return {
-    users: users.slice(
-      filterParams.startPaginationIndex,
-      filterParams.endPaginationIndex
-    ), // apply pagination limits
-    count: users.length,
+    users: users,
+    count: totalUsers,
   };
 };
 
-const getUserByIDFromCloud = async (userId) => {
+//get one user from cloud API
+const getUserByID = async (userId) => {
   let users = {};
   try {
     const request = await fetch(CLOUD_USERS_API_URL);
@@ -51,6 +56,7 @@ const getUserByIDFromCloud = async (userId) => {
   return user;
 };
 
+//get  user post list from cloud API
 const getUserPostList = async (filterParams) => {
   let posts = {};
   try {
@@ -60,22 +66,25 @@ const getUserPostList = async (filterParams) => {
     }
     posts = await request.json();
   } catch (error) {
-    throw { status: 500, message: error.message || "An error occurred" };
+    throw { status: 500, message: error.message };
   }
   let userPostsList = posts.filter((post) => {
     return post.userId === filterParams.userId;
   });
+  const totalUserPosts = userPostsList.length;
 
   userPostsList = userPostsList.slice(
     filterParams.startPaginationIndex,
     filterParams.endPaginationIndex
   );
+
   return {
     posts: userPostsList,
-    count: userPostsList.length,
+    count: totalUserPosts,
   };
 };
 
+// create new user post
 const createUserPost = async (postData) => {
   let newPost = {};
   try {
@@ -94,15 +103,15 @@ const createUserPost = async (postData) => {
   } catch (error) {
     throw {
       status: error.status || 500,
-      message: error.message || "An Error occurred",
+      message: error.message,
     };
   }
   return newPost;
 };
 
 export default {
-  getUsersFromCloud,
-  getUserByIDFromCloud,
+  getUsers,
+  getUserByID,
   getUserPostList,
   createUserPost,
 };

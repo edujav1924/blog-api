@@ -1,7 +1,12 @@
-// get start pagination index and end pagination index. example: page=1 start_index=0 and end_index=10
-const getPaginationLimits = (page, limit = 10) => {
-  const startPaginationIndex = (page - 1) * limit;
-  const endPaginationIndex = page * limit;
+// get pagination params, limited to max 50 items
+const getPaginationLimits = (offset = 0, limit = 50) => {
+  const startPaginationIndex = offset;
+  let endPaginationIndex = 0;
+  if (limit - offset <= 50) {
+    endPaginationIndex = limit;
+  } else {
+    endPaginationIndex = offset + 50;
+  }
   return [startPaginationIndex, endPaginationIndex];
 };
 export { getPaginationLimits };

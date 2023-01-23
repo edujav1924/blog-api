@@ -1,76 +1,82 @@
 import { getPaginationLimits } from "../../utils/pagination.js";
 import cloudUser from "../cloud/users.js";
 
+// get user list
 const getUserList = async (req) => {
-  const limit = 5;
   let filterParams = {};
-  let { page } = req.query; // filters handled for now
   let usersList = {};
-  page = isNaN(parseInt(page)) || page < 1 ? 1 : parseInt(page); // get correct page number to show
-  const paginationLimits = getPaginationLimits(page, limit); // only founded 10 users, so ajust limit to 5
+  let { offset, limit } = req.query; // filters handled for now
+
+  // check and validate pagination limits
+  offset = parseInt(offset);
+  limit = parseInt(limit);
+  offset = isNaN(offset) || offset < 0 ? 0 : offset;
+  limit = isNaN(limit) || limit < 0 ? 50 : limit;
+
+  const paginationLimits = getPaginationLimits(offset, limit);
   filterParams.startPaginationIndex = paginationLimits[0];
   filterParams.endPaginationIndex = paginationLimits[1];
   try {
-    usersList = await cloudUser.getUsersFromCloud(filterParams);
-    const hasNextPage = (usersList.count / limit).toFixed(2) > page;
-    usersList.hasNextPage = hasNextPage;
-    usersList.currentPage = page;
+    usersList = await cloudUser.getUsers(filterParams);
   } catch (error) {
     throw { status: error.status || 500, message: error.message };
   }
-
   return usersList;
 };
 
+// get one user
 const getUser = async (req) => {
   let user = {};
   const { userId } = req.params;
   try {
-    user = await cloudUser.getUserByIDFromCloud(parseInt(userId));
+    user = await cloudUser.getUserByID(parseInt(userId));
   } catch (error) {
     throw { status: error.status || 500, message: error.message };
   }
   return user;
 };
 
+// get user post list
 const getUserPostList = async (req) => {
-  const limit = 5;
-  let { page } = req.query; // filters handled for now
-  let { userId } = req.params;
   let userPostsList = {};
   let filterParams = {};
+  let { offset, limit } = req.query; // filters handled for now
+  let { userId } = req.params;
 
-  page = isNaN(parseInt(page)) || page < 1 ? 1 : parseInt(page); // get correct page number to show
-  const paginationLimits = getPaginationLimits(page, limit); // only founded 10 users, so ajust limit to 5
+  // check and validate pagination limits
+  offset = parseInt(offset);
+  limit = parseInt(limit);
+  offset = isNaN(offset) || offset < 0 ? 0 : offset;
+  limit = isNaN(limit) || limit < 0 ? 50 : limit;
+
+  const paginationLimits = getPaginationLimits(offset, limit); // get correct pagination limits
   filterParams.startPaginationIndex = paginationLimits[0];
   filterParams.endPaginationIndex = paginationLimits[1];
   filterParams.userId = parseInt(userId);
   try {
     userPostsList = await cloudUser.getUserPostList(filterParams);
-    const hasNextPage = (userPostsList.count / limit).toFixed(2) > page;
-    userPostsList.hasNextPage = hasNextPage;
-    userPostsList.currentPage = page;
   } catch (error) {
     throw { status: error.status || 500, message: error.message };
   }
-
   return userPostsList;
 };
 
+// create New User post
 const createNewUserPost = async (req) => {
   const { userId, body, title } = req.body;
   const postData = {
     userId: userId,
     body: body,
     title: title,
-  };
+  }; // set value from request body
+  //todo: is important validate all data values and verify exist keys for the user
   let newPost = {};
   try {
     newPost = await cloudUser.createUserPost(postData);
   } catch (error) {
     throw {
       status: error.status || 500,
-      message: error.message || "An error ocurred",
+      message: error.message,
     };
   }
   return newPost;
