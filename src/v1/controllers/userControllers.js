@@ -4,7 +4,7 @@ const getUserList = async (req, res) => {
   try {
     users = await userService.getUserList(req);
   } catch (error) {
-    return res.status(error.status).json({ error: error.message });
+    return res.status(error.status || 500).json({ error: error.message });
   }
   return res.json(users);
 };
@@ -14,7 +14,7 @@ const getUser = async (req, res) => {
   try {
     user = await userService.getUser(req);
   } catch (error) {
-    return res.status(error.status).json({ error: error.message });
+    return res.status(error.status || 500).json({ error: error.message });
   }
   return res.json({ user: user });
 };
@@ -24,7 +24,7 @@ const getUserPostList = async (req, res) => {
   try {
     postList = await userService.getUserPostList(req);
   } catch (error) {
-    return res.status(error.status).json({ error: error.message });
+    return res.status(error.status || 500).json({ error: error.message });
   }
   return res.json(postList);
 };
