@@ -1,11 +1,11 @@
 swagger: "2.0"
 info:
-  description: This is a simple API
+  description: This is a simple Test API
   version: 1.0.0
   title: Blog API
   # put the contact info for your development or API team
   contact:
-    email: you@your-company.com
+    email: edujav21@gmail.com
 
   license:
     name: Apache 2.0
@@ -49,9 +49,9 @@ paths:
           schema:
             type: object
             required:
-              - message
+              - error
             properties:
-              message:
+              error:
                 type: string
                 example: Server Error
   /users/{userId}:
@@ -85,9 +85,9 @@ paths:
           schema:
             type: object
             required:
-              - message
+              - error
             properties:
-              message:
+              error:
                 type: string
                 example: Server Error
         404:
@@ -95,9 +95,9 @@ paths:
           schema:
             type: object
             required:
-              - message
+              - error
             properties:
-              message:
+              error:
                 type: string
                 example: User not found
   /users/{userId}/posts:
@@ -139,9 +139,9 @@ paths:
           schema:
             type: object
             required:
-              - message
+              - error
             properties:
-              message:
+              error:
                 type: string
                 example: Server Error
     post:
@@ -193,9 +193,9 @@ paths:
           schema:
             type: object
             required:
-              - message
+              - error
             properties:
-              message:
+              error:
                 type: string
                 example: Server Error
 definitions:

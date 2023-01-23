@@ -1,5 +1,5 @@
 import { jest } from "@jest/globals";
-import cloudUser from "../../cloud/users.js";
+import cloudUser from "../../databases/cloudApi/users.js";
 
 global.fetch = jest.fn();
 

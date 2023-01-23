@@ -17,7 +17,7 @@
 					}
 				],
 				"url": {
-					"raw": "http://localhost:3000/api/v1/users?limit=10&offset=0",
+					"raw": "http://localhost:3000/api/v1/users?limit=10&offset=5",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -35,7 +35,7 @@
 						},
 						{
 							"key": "offset",
-							"value": "0"
+							"value": "5"
 						}
 					]
 				}
@@ -46,14 +46,6 @@
 			"name": "get user",
 			"request": {
 				"method": "GET",
-				"header": []
-			},
-			"response": []
-		},
-		{
-			"name": "get user post list",
-			"request": {
-				"method": "GET",
 				"header": [
 					{
 						"key": "Authorization",
@@ -62,7 +54,7 @@
 					}
 				],
 				"url": {
-					"raw": "http://localhost:3000/api/v1/users/1/posts/?page=1",
+					"raw": "http://localhost:3000/api/v1/users/11",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -72,15 +64,48 @@
 						"api",
 						"v1",
 						"users",
-						"1",
-						"posts",
-						""
-					],
-					"query": [
-						{
-							"key": "page",
-							"value": "1"
+						"11"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get user post list",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Api-Key pqM9mP5Vx0qWHfXD8zNf6Zno0zaLSLl5odrNc4Ta8Oes3lWRsnU",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"userId\":1,\n    \"title\":\"title\",\n    \"body\":\"title\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
 						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/v1/users/14/posts",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"v1",
+						"users",
+						"14",
+						"posts"
 					]
 				}
 			},
@@ -90,7 +115,13 @@
 			"name": "create new user post",
 			"request": {
 				"method": "POST",
-				"header": [],
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Api-Key pqM9mP5Vx0qWHfXD8zNf6Zno0zaLSLl5odrNc4Ta8Oes3lWRsnU",
+						"type": "default"
+					}
+				],
 				"body": {
 					"mode": "raw",
 					"raw": "{\n    \"userId\":1,\n    \"title\":\"title\",\n    \"body\":\"title\"\n}",
