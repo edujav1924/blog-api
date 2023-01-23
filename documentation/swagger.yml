@@ -18,8 +18,8 @@ paths:
     get:
       tags:
         - developers
-      summary: get users from fake online API
-      operationId: searchInventory
+      summary: get users from fake API
+      operationId: getUsers
       description: |
         By passing in the appropriate options, you can search for
         available inventory in the system
@@ -58,10 +58,10 @@ paths:
     get:
       tags:
         - developers
-      summary: get one user from fake online API
-      operationId: userid
+      summary: get one user from fake API
+      operationId: getUser
       description: |
-        By passing in the appropriate options, you can get the available user
+        By passing in the appropriate options, you can get the specific user
       produces:
         - application/json
       parameters:
@@ -74,10 +74,120 @@ paths:
         200:
           description: Successful operation
           schema:
+            type: object
+            required:
+              - user
+            properties:
+              user:
+                $ref: "#/definitions/User"
+        500:
+          description: Server Error
+          schema:
+            type: object
+            required:
+              - message
+            properties:
+              message:
+                type: string
+                example: Server Error
+        404:
+          description: User Not found
+          schema:
+            type: object
+            required:
+              - message
+            properties:
+              message:
+                type: string
+                example: User not found
+  /users/{userId}/posts:
+    get:
+      tags:
+        - developers
+      summary: get user posts from fake API
+      operationId: getUserPosts
+      description: |
+        Get user post from fake API
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: userId
+          description: userId
+          required: true
+          type: integer
+        - in: query
+          name: offset
+          description: number of records to skip for pagination
+          type: integer
+          minimum: 0
+        - in: query
+          name: limit
+          description: maximum number of records to return
+          type: integer
+          minimum: 0
+          maximum: 50
+      responses:
+        200:
+          description: sucessful response for list of user posts
+          schema:
             type: array
             items:
-              $ref: "#/definitions/User"
-
+              $ref: "#/definitions/Post"
+        500:
+          description: Server Error
+          schema:
+            type: object
+            required:
+              - message
+            properties:
+              message:
+                type: string
+                example: Server Error
+    post:
+      tags:
+        - developers
+      summary: create new user post
+      description: |
+        Create a new user post into fake api
+      consumes:
+        - application/json
+      parameters:
+        - in: path
+          name: userId
+          description: userId
+          required: true
+          type: integer
+        - in: body
+          name: user
+          description: User to create
+          schema:
+            type: object
+            required:
+              - id
+              - userId
+              - title
+              - body
+            properties:
+              id:
+                type: integer
+                example: 1
+              userId:
+                type: integer
+                example: 3
+              title:
+                type: string
+                example: "New Post"
+              body:
+                type: string
+                example: "This is a post content"
+      responses:
+        201:
+          description: Successful response when creating user post
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/Post"
         500:
           description: Server Error
           schema:
@@ -171,3 +281,22 @@ definitions:
       bs:
         type: string
         example: harness real-time e-markets
+  Post:
+    required:
+      - id
+      - userId
+      - title
+      - body
+    properties:
+      id:
+        type: integer
+        example: 2
+      userId:
+        type: integer
+        example: 4
+      title:
+        type: string
+        example: "title of post"
+      body:
+        type: string
+        example: "body of post"
