@@ -1,0 +1,2 @@
+- El paquete 'node-fetch' ya está soportado por defecto para versiones de Node mayores a 18, pero para esta versión se necesita instalar por separado.
+- Tambien para versiones de node mayores a 18 ya traen por defecto un ejecutor de Pruebas integrado sin necesidad de instalar por separado como en esta versión.
