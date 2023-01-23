@@ -1,7 +1,9 @@
 # blog-api
+
 # Pasos para instalar (Linux)
+
 - previamente tener instalado NodeJs (particularmente desarrollé esta API en la versión 14.21)
-- Ir a la carpeta /blog-api y ejecutar  `npm install --y` para instalar dependencias
+- Ir a la carpeta /blog-api y ejecutar `npm install` para instalar dependencias
 - para correr el servidor de prueba `npm run dev`
 - para ejecutar todos los test generados `npm run test`
 - para ejecutar un archivo de test en concreto `npm test --- 'nombre_archivo'` ejemplo: npm test --- pagination.test.js
