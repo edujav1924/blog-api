@@ -5,8 +5,8 @@ import v1Routes from "./v1/routes/userRoutes.js";
 
 const PORT = process.env.PORT || 3000;
 const app = express();
-config();
-global.fetch = fetch;
+config(); // Allows you to read the .env file and set the values
+global.fetch = fetch; // prevent conflict with tests fetch function
 
 app.use(express.json());
 // set routes for API
