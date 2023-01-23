@@ -1,0 +1,173 @@
+swagger: "2.0"
+info:
+  description: This is a simple API
+  version: 1.0.0
+  title: Blog API
+  # put the contact info for your development or API team
+  contact:
+    email: you@your-company.com
+
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+
+# tags are used for organizing operations
+
+paths:
+  /users:
+    get:
+      tags:
+        - developers
+      summary: get users from fake online API
+      operationId: searchInventory
+      description: |
+        By passing in the appropriate options, you can search for
+        available inventory in the system
+      produces:
+        - application/json
+      parameters:
+        - in: query
+          name: offset
+          description: number of records to skip for pagination
+          type: integer
+          minimum: 0
+        - in: query
+          name: limit
+          description: maximum number of records to return
+          type: integer
+          minimum: 0
+          maximum: 50
+      responses:
+        200:
+          description: search results matching criteria
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/User"
+        500:
+          description: Server Error
+          schema:
+            type: object
+            required:
+              - message
+            properties:
+              message:
+                type: string
+                example: Server Error
+  /users/{userId}:
+    get:
+      tags:
+        - developers
+      summary: get one user from fake online API
+      operationId: userid
+      description: |
+        By passing in the appropriate options, you can get the available user
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: userId
+          required: true
+          description: unique user identifier
+          type: integer
+      responses:
+        200:
+          description: Successful operation
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/User"
+
+        500:
+          description: Server Error
+          schema:
+            type: object
+            required:
+              - message
+            properties:
+              message:
+                type: string
+                example: Server Error
+definitions:
+  User:
+    type: object
+    required:
+      - id
+      - name
+      - username
+      - phone
+      - email
+      - website
+      - address
+      - company
+    properties:
+      id:
+        type: integer
+        example: 1025
+      name:
+        type: string
+        example: Luis Lopez
+      username:
+        type: string
+        example: luisl
+      phone:
+        type: string
+        example: 1-770-736-8031 x56442
+      email:
+        type: string
+        example: Sincere@april.biz
+      website:
+        type: string
+        example: hildegard.org
+      address:
+        $ref: "#/definitions/Address"
+      company:
+        $ref: "#/definitions/Company"
+  Address:
+    required:
+      - street
+      - suite
+      - city
+      - zipcode
+      - geo
+    properties:
+      street:
+        type: string
+        example: Kulas Light
+      suite:
+        type: string
+        example: Apt. 556
+      city:
+        type: string
+        example: Gwenborough
+      zipcode:
+        type: string
+        example: 92998-3874
+      geo:
+        $ref: "#/definitions/Geo"
+  Geo:
+    required:
+      - lat
+      - lng
+    properties:
+      lat:
+        type: string
+        example: -37.3159
+      lng:
+        type: string
+        example: 81.1496
+  Company:
+    required:
+      - name
+      - catchPhrase
+      - bs
+    properties:
+      name:
+        type: string
+        example: Romaguera-Crona
+      catchPhrase:
+        type: string
+        example: Multi-layered client-server neural-net
+      bs:
+        type: string
+        example: harness real-time e-markets
