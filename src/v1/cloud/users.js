@@ -3,6 +3,7 @@ import {
   CLOUD_USERS_POSTS_API_URL,
 } from "../../utils/constants/userConstants.js";
 
+// get users from cloud API
 const getUsers = async (filterParams) => {
   let users = {};
   try {
@@ -28,6 +29,7 @@ const getUsers = async (filterParams) => {
   };
 };
 
+//get one user from cloud API
 const getUserByID = async (userId) => {
   let users = {};
   try {
@@ -54,6 +56,7 @@ const getUserByID = async (userId) => {
   return user;
 };
 
+//get  user post list from cloud API
 const getUserPostList = async (filterParams) => {
   let posts = {};
   try {
@@ -81,6 +84,7 @@ const getUserPostList = async (filterParams) => {
   };
 };
 
+// create new user post
 const createUserPost = async (postData) => {
   let newPost = {};
   try {

@@ -1,4 +1,6 @@
 import userService from "../services/userServices.js";
+
+// get users
 const getUserList = async (req, res) => {
   let users = {};
   try {
@@ -9,6 +11,7 @@ const getUserList = async (req, res) => {
   return res.json(users);
 };
 
+// get one user
 const getUser = async (req, res) => {
   let user = {};
   try {
@@ -19,6 +22,7 @@ const getUser = async (req, res) => {
   return res.json({ user: user });
 };
 
+// get user post list
 const getUserPostList = async (req, res) => {
   let postList = {};
   try {
@@ -29,6 +33,7 @@ const getUserPostList = async (req, res) => {
   return res.json(postList);
 };
 
+// create new user post
 const createNewUserPost = async (req, res) => {
   let newPost = {};
   try {
