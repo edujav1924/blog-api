@@ -1,5 +1,5 @@
 import { getPaginationLimits } from "../../../utils/pagination.js";
-test("pagination indexs return", function () {
+test("Check paging index return", function () {
   let paginationLimits = getPaginationLimits(0, 30);
   expect(paginationLimits[0]).toEqual(0);
   expect(paginationLimits[1]).toEqual(30);
